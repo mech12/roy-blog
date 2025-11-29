@@ -1,4 +1,4 @@
-.PHONY: help local prod install clean
+.PHONY: help local prod install clean kill
 
 help:
 	@echo "사용법:"
@@ -24,4 +24,9 @@ prod:
 clean:
 	@echo "🧹 캐시 삭제 중..."
 	rm -rf _site .jekyll-cache .sass-cache
+	@echo "✅ 완료"
+
+kill:
+	@echo "🔪 포트 4000 프로세스 종료 중..."
+	@lsof -ti:4000 | xargs kill -9 2>/dev/null || echo "포트 4000에 실행 중인 프로세스가 없습니다."
 	@echo "✅ 완료"
