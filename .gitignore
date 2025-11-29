@@ -7,5 +7,3 @@ vendor
 Gemfile.lock
 __pycache__/
 
-# 딥러닝 실습 폴더 (내부 .git 폴더 존재)
-docs/dx에서dx로의 전환/2주차-실습-딥러닝/

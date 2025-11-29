@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 개고양이_resnet.py
-parent: 2주차 실습 코드
+parent: 2주차 코드
 grand_parent: DX 전환
 nav_order: 16
 ---

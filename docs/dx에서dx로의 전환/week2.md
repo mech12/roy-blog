@@ -3,6 +3,7 @@ layout: default
 title: 2주차 - 딥러닝
 parent: DX 전환
 nav_order: 2
+has_children: true
 ---
 
 # 2주차: 딥러닝 종합
@@ -90,13 +91,13 @@ y_pred = np.argmax(y_pred, axis=1)
 
 ### 실습 파일 목록
 
-**[전체 실습 코드 보기](week2-code/)** - 클릭하면 소스 코드 확인 가능
+**[전체 실습 코드 보기](2주차-코드/)** - 클릭하면 소스 코드 확인 가능
 
 | 파일 | 설명 |
 |------|------|
-| [iris딥러닝.py](week2-code/iris딥러닝) | Iris 데이터 딥러닝 분류 |
-| [손글씨.py](week2-code/손글씨) | MNIST CNN 분류 |
-| [개고양이_new.py](week2-code/개고양이_new) | CNN 이미지 분류 + 데이터 증강 |
+| [iris딥러닝.py](2주차-코드/iris딥러닝) | Iris 데이터 딥러닝 분류 |
+| [손글씨.py](2주차-코드/손글씨) | MNIST CNN 분류 |
+| [개고양이_new.py](2주차-코드/개고양이_new) | CNN 이미지 분류 + 데이터 증강 |
 
 ### 딥러닝 모델 구조
 

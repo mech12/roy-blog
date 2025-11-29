@@ -1,8 +1,9 @@
 ---
 layout: default
-title: 2주차 실습 코드
-parent: DX 전환
-nav_order: 5
+title: 2주차 코드
+parent: 2주차 - 딥러닝
+grand_parent: DX 전환
+nav_order: 10
 has_children: true
 ---
 
