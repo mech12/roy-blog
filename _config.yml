@@ -1,19 +1,46 @@
 # Site settings
 title: Roy's Tech Blog
-email: your-email@example.com
-description: >-
-  기술 문서화 블로그 - 개발 노트, 튜토리얼, 기술 가이드
-baseurl: "/roy-blog" # GitHub repo 이름
-url: "https://mech12.github.io" # GitHub Pages URL
-github_username: mech12
+description: 기술 문서화 블로그 - 개발 노트, 튜토리얼, 기술 가이드
+baseurl: "/roy-blog"
+url: "https://mech12.github.io"
 repository: mech12/roy-blog
 
 # Build settings
-remote_theme: pages-themes/minimal@v0.2.0
+remote_theme: just-the-docs/just-the-docs@v0.10.0
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
+
+# Just the Docs 설정
+color_scheme: light
+
+# 검색 활성화
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# 네비게이션 설정
+nav_sort: case_insensitive
+back_to_top: true
+back_to_top_text: "맨 위로"
+
+# Footer
+footer_content: "Copyright &copy; 2025 Roy's Tech Blog"
+
+# Heading anchor links
+heading_anchors: true
+
+# External navigation links
+nav_external_links:
+  - title: GitHub
+    url: https://github.com/mech12/roy-blog
 
 # Markdown 설정
 markdown: kramdown
@@ -31,3 +58,5 @@ exclude:
   - node_modules/
   - vendor/
   - blog-setup.md
+  - Makefile
+  - deploy.sh

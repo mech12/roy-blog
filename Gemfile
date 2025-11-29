@@ -1,15 +1,14 @@
 source "https://rubygems.org"
 
-# GitHub Pages gem - handles Jekyll version automatically
-gem "github-pages", group: :jekyll_plugins
+gem "jekyll", "~> 4.3"
+gem "just-the-docs", "~> 0.10.0"
 
-# If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem "jekyll-seo-tag"
+  gem "jekyll-remote-theme"
 end
 
-# Windows and JRuby does not include zoneinfo files
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
   gem "tzinfo-data"
