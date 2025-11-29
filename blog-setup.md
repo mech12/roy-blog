@@ -1,48 +1,109 @@
-# Jekyll 기반 GitHub 블로그 로드맵
+# Jekyll 기반 GitHub 블로그 설정 가이드
 
-기술 문서화에 적합한 Jekyll 블로그를 만들기 위한 단계입니다.
+## 블로그 정보
+
+- **URL**: https://mech12.github.io/roy-blog/
+- **Repository**: https://github.com/mech12/roy-blog
+- **테마**: Minimal (pages-themes/minimal)
 
 ## 1. 환경 준비
 
+### macOS (Homebrew 사용)
+
 ```bash
-# Ruby 설치 확인
-ruby -v
+# Homebrew Ruby 설치 (시스템 Ruby 권한 문제 해결)
+brew install ruby
+
+# PATH 설정 (~/.zshrc에 추가)
+export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 
 # Jekyll과 Bundler 설치
 gem install jekyll bundler
 ```
 
-## 2. 테마 선택 (기술 문서용 추천)
-
-| 테마 | 특징 |
-|------|------|
-| **Just the Docs** | 문서화 특화, 검색 기능, 네비게이션 |
-| **Minimal Mistakes** | 다목적, 커스터마이징 용이 |
-| **Documentation Theme** | 기술 문서 전용 |
-| **Chirpy** | 깔끔한 UI, 다크모드 지원 |
-
-## 3. 프로젝트 설정
-
-```bash
-# 새 Jekyll 사이트 생성
-jekyll new roy-blog --skip-bundle
-cd roy-blog
-
-# 또는 테마 기반으로 시작 (예: Just the Docs)
-# Gemfile에 테마 추가 후 bundle install
-```
-
-## 4. GitHub Pages 배포
-
-1. GitHub에 `username.github.io` 또는 원하는 repo 생성
-2. `_config.yml`에 baseurl 설정
-3. GitHub Actions 또는 직접 push로 배포
-
-## 5. 콘텐츠 구성
+## 2. 프로젝트 구조
 
 ```text
-├── _posts/          # 블로그 포스트
-├── docs/            # 문서 페이지
-├── _config.yml      # 사이트 설정
-└── assets/          # 이미지, CSS 등
+roy-blog/
+├── .github/
+│   └── workflows/
+│       └── jekyll.yml      # GitHub Actions 배포 워크플로우
+├── _posts/                  # 블로그 포스트 (YYYY-MM-DD-title.md)
+├── _config.yml              # Jekyll 설정
+├── Gemfile                  # Ruby 의존성
+├── index.markdown           # 메인 페이지
+├── about.markdown           # About 페이지
+├── 404.html                 # 404 페이지
+└── deploy.sh                # 배포 스크립트
 ```
+
+## 3. 주요 설정 파일
+
+### _config.yml
+
+```yaml
+title: Roy's Tech Blog
+description: 기술 문서화 블로그
+baseurl: "/roy-blog"
+url: "https://mech12.github.io"
+repository: mech12/roy-blog
+
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+```
+
+### Gemfile
+
+```ruby
+source "https://rubygems.org"
+gem "github-pages", group: :jekyll_plugins
+gem "webrick"
+```
+
+## 4. 배포 방식
+
+GitHub Actions를 통한 자동 배포:
+- `main` 브랜치에 push하면 자동으로 빌드 및 배포
+- 워크플로우: `.github/workflows/jekyll.yml`
+
+## 5. 로컬 개발
+
+```bash
+# 의존성 설치
+bundle install
+
+# 로컬 서버 실행 (http://localhost:4000/roy-blog/)
+bundle exec jekyll serve
+```
+
+## 6. 새 포스트 작성
+
+`_posts/` 폴더에 `YYYY-MM-DD-제목.md` 형식으로 파일 생성:
+
+```markdown
+---
+layout: post
+title: "포스트 제목"
+date: 2025-11-29
+categories: [카테고리]
+---
+
+포스트 내용...
+```
+
+## 7. 배포
+
+```bash
+# 방법 1: deploy.sh 스크립트 사용
+./deploy.sh "커밋 메시지"
+
+# 방법 2: 수동 배포
+git add .
+git commit -m "커밋 메시지"
+git push origin main
+```
+
+GitHub Actions가 자동으로 빌드 및 배포합니다.
