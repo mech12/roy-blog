@@ -1,9 +1,9 @@
 ---
 layout: default
 title: 엔디언 CPU별 역사
-parent: 걸리버 여행기 원작에 대해
-grand_parent: 잡동사니
-nav_order: 3
+parent: On Holy Wars and a Plea for Peace
+grand_parent: 걸리버 여행기 원작에 대해
+nav_order: 1
 ---
 
 # Big-endian / Little-endian의 CPU별 역사

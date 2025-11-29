@@ -4,6 +4,7 @@ title: On Holy Wars and a Plea for Peace
 parent: 걸리버 여행기 원작에 대해
 grand_parent: 잡동사니
 nav_order: 1
+has_children: true
 ---
 
 # On Holy Wars and a Plea for Peace
