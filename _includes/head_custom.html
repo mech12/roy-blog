@@ -1,0 +1,87 @@
+<style>
+/* Top Menu 스타일 */
+.top-menu {
+  background-color: #f5f6fa;
+  border-bottom: 1px solid #eeebee;
+  padding: 0.5rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-menu-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.top-menu-item a {
+  color: #5c5962;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.top-menu-item a:hover {
+  color: #7253ed;
+}
+
+.top-menu-item.active a {
+  color: #7253ed;
+  border-bottom: 2px solid #7253ed;
+  padding-bottom: 0.25rem;
+}
+
+/* 3-column 레이아웃 조정 */
+@media (min-width: 66.5rem) {
+  .side-bar {
+    width: 248px;
+  }
+
+  .main {
+    margin-left: 248px;
+  }
+
+  .main-content-wrap {
+    display: flex;
+    max-width: none;
+    padding-right: 0;
+  }
+
+  .main-content {
+    flex: 1;
+    max-width: 800px;
+    padding-right: 2rem;
+  }
+
+  /* 오른쪽 TOC 영역 */
+  .toc-wrapper {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 4rem;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    padding: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .toc-wrapper .toc-list {
+    border-left: 1px solid #eeebee;
+    padding-left: 1rem;
+  }
+
+  .toc-wrapper a {
+    color: #5c5962;
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0;
+  }
+
+  .toc-wrapper a:hover {
+    color: #7253ed;
+  }
+}
+</style>

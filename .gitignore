@@ -7,7 +7,5 @@ vendor
 Gemfile.lock
 __pycache__/
 
-# 실습 폴더 제외 (API 키 포함)
-docs/dx에서dx로의 전환/1주차-실습-머신러닝/
+# 딥러닝 실습 폴더 (내부 .git 폴더 존재)
 docs/dx에서dx로의 전환/2주차-실습-딥러닝/
-docs/dx에서dx로의 전환/3주차-실습-LLM/

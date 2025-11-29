@@ -90,13 +90,13 @@ y_pred = np.argmax(y_pred, axis=1)
 
 ### 실습 파일 목록
 
+**[전체 실습 코드 보기](week2-code/)** - 클릭하면 소스 코드 확인 가능
+
 | 파일 | 설명 |
 |------|------|
-| `iris딥러닝.py` | Iris 데이터 딥러닝 분류 |
-| `개고양이_new.py` | CNN 이미지 분류 |
-| `개고양이_resnet.py` | ResNet 전이학습 |
-| `minst_모델저장.py` | 모델 저장/로드 |
-| `bert1.py` | BERT 자연어 처리 |
+| [iris딥러닝.py](week2-code/iris딥러닝) | Iris 데이터 딥러닝 분류 |
+| [손글씨.py](week2-code/손글씨) | MNIST CNN 분류 |
+| [개고양이_new.py](week2-code/개고양이_new) | CNN 이미지 분류 + 데이터 증강 |
 
 ### 딥러닝 모델 구조
 

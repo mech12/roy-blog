@@ -37,6 +37,11 @@ footer_content: "Copyright &copy; 2025 Roy's Tech Blog"
 # Heading anchor links
 heading_anchors: true
 
+# Table of Contents (오른쪽 목차)
+toc:
+  heading_level: 2      # h2부터 표시
+  list_class: "toc-list"
+
 # Markdown 설정
 markdown: kramdown
 kramdown:
