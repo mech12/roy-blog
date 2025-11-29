@@ -37,11 +37,6 @@ footer_content: "Copyright &copy; 2025 Roy's Tech Blog"
 # Heading anchor links
 heading_anchors: true
 
-# External navigation links
-nav_external_links:
-  - title: GitHub
-    url: https://github.com/mech12/roy-blog
-
 # Markdown 설정
 markdown: kramdown
 kramdown:
