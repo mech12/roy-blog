@@ -97,3 +97,12 @@ Danny Cohen은 기술적 글을 매우 문학적으로 풀었음.
 4. 엔디언 차이로 발생하는 문제 시나리오
 5. 해결책 제시 (network byte order)
 6. "Holy War"와 같던 엔지니어들의 논쟁을 평화롭게 만들자 → **Plea for Peace**
+
+---
+
+## 심화 자료
+
+- [엔디언 CPU별 역사](엔디언-CPU별-역사) - Intel, Motorola, MIPS, ARM 등 CPU 아키텍처별 엔디언 역사
+- [현대 아키텍처의 엔디언](엔디언-현대-아키텍처) - x86, ARM, MIPS, RISC-V, PowerPC의 엔디언 동작
+- [Network Byte Order 코드 예제](엔디언-코드-예제) - C, Go, Python, Rust 실제 코드
+- [걸리버 여행기와 논문 비교](걸리버-논문-구조-비교) - 두 작품의 서사 구조와 풍자 비교
