@@ -3,6 +3,7 @@ layout: default
 title: 1주차 - AX 시대
 parent: DX 전환
 nav_order: 1
+has_children: true
 ---
 
 # 1주차: AX 시대 (머신러닝 개요)

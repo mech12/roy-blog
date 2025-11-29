@@ -1,8 +1,9 @@
 ---
 layout: default
 title: 3주차 코드
-parent: DX 전환
-nav_order: 6
+parent: 3주차 - LLM
+grand_parent: DX 전환
+nav_order: 10
 has_children: true
 ---
 

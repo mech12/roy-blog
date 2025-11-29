@@ -2,7 +2,7 @@
 layout: default
 title: rag1.py
 parent: 3주차 코드
-grand_parent: DX 전환
+grand_parent: 3주차 - LLM
 nav_order: 5
 ---
 

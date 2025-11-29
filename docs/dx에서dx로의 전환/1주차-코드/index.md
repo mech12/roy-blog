@@ -1,8 +1,9 @@
 ---
 layout: default
 title: 1주차 코드
-parent: DX 전환
-nav_order: 4
+parent: 1주차 - AX 시대
+grand_parent: DX 전환
+nav_order: 10
 has_children: true
 ---
 

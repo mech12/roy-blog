@@ -3,6 +3,7 @@ layout: default
 title: 3주차 - LLM
 parent: DX 전환
 nav_order: 3
+has_children: true
 ---
 
 # 3주차: LLM이란
