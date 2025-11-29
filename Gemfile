@@ -1,12 +1,12 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3"
-gem "just-the-docs", "~> 0.10.0"
+gem "github-pages", group: :jekyll_plugins
 
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem "jekyll-seo-tag"
   gem "jekyll-remote-theme"
+  gem "jekyll-include-cache"
 end
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do
