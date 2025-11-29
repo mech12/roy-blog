@@ -1,0 +1,32 @@
+# Site settings
+title: Roy's Tech Blog
+email: your-email@example.com
+description: >-
+  기술 문서화 블로그 - 개발 노트, 튜토리얼, 기술 가이드
+baseurl: "/roy-blog" # GitHub repo 이름
+url: "https://mech12.github.io" # GitHub Pages URL
+github_username: mech12
+
+# Build settings
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+
+# Markdown 설정
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - blog-setup.md
