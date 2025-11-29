@@ -2,16 +2,18 @@
 layout: default
 title: DX 전환
 nav_order: 7
-has_children: false
+has_children: true
 permalink: /docs/dx/
 ---
 
 # DX 전환
 
-수업 자료 목록입니다.
+DX에서 AX로의 전환을 위한 AI/ML 교육 과정입니다.
 
-| 주차 | 제목 | 파일 |
+## 커리큘럼
+
+| 주차 | 이론 | 실습 |
 |------|------|------|
-| 1주차 | AX 시대 | [다운로드](1주차-ax시대.pptx) |
-| 2주차 | 딥러닝 종합 | [다운로드](2주차-딥러닝_종합.ppt) |
-| 3주차 | LLM이란 | [다운로드](3주차-LLM이란-2025-1129.pptx) |
+| 1주차 | AX 시대 (머신러닝 개요) | Python 기초, 머신러닝 |
+| 2주차 | 딥러닝 종합 | CNN, 이미지 분류 |
+| 3주차 | LLM이란 | LangChain, RAG, 챗봇 |
