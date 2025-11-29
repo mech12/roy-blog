@@ -110,11 +110,13 @@ def document_search(query: str) -> str:
 
 ### 실습 파일 목록
 
+**[전체 실습 코드 보기](3주차-코드/)** - 클릭하면 소스 코드 확인 가능
+
 | 파일 | 설명 |
 |------|------|
-| `랭체인1.py` | LangChain 기본 사용법 |
-| `rag1.py` | RAG 기본 구현 |
-| `rag2.py` | RAG 고급 구현 |
-| `구글1~6.py` | Google Gemini API 활용 |
-| `챗봇1~4.py` | 대화형 챗봇 구현 |
-| `오픈1~3.py` | OpenAI API 활용 |
+| [랭체인1.py](3주차-코드/랭체인1) | LangChain + Gemini 기본 사용법 |
+| [구글1.py](3주차-코드/구글1) | Google Gemini API 기본 호출 |
+| [챗봇1.py](3주차-코드/챗봇1) | 대화형 챗봇 (세션 관리) |
+| [함수1.py](3주차-코드/함수1) | Function Calling 구현 |
+| [rag1.py](3주차-코드/rag1) | RAG 기본 구현 |
+| [오픈1.py](3주차-코드/오픈1) | OpenAI GPT API 대화 예제 |

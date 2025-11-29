@@ -2,7 +2,7 @@
 layout: default
 title: iris딥러닝.py
 parent: 2주차 코드
-grand_parent: DX 전환
+grand_parent: 2주차 - 딥러닝
 nav_order: 1
 ---
 
