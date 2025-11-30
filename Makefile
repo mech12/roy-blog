@@ -16,7 +16,7 @@ local:
 	@echo ""
 	@echo "🔗 로컬 주소: http://localhost:4000/roy-blog/"
 	@echo ""
-	bundle exec jekyll serve
+	bundle exec jekyll serve --livereload
 
 prod:
 	@./deploy.sh "$(msg)"
