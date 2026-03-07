@@ -3,19 +3,18 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import json
 
-# Load API key from .env file
+# Load config from .env file
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
-# Ensure the API key is available
-if not api_key:
-    raise ValueError("No API key found. Please check your .env file.")
-client = OpenAI(api_key=api_key)
+client = OpenAI(
+    base_url=os.getenv('MSA_LLM_API_BASE', 'http://10.10.20.92:8009/v1'),
+    api_key=os.environ['MSA_LLM_API_KEY'],
+)
 
 
 # Example function to query ChatGPT
 def ask_chatgpt(messages):
     response = client.chat.completions.create(
-        model="gpt-4.1",
+        model=os.getenv('MSA_LLM_MODEL', '/models/gpt-oss-120b'),
         messages=messages,
         temperature=0.7,        
         )     

@@ -1,15 +1,19 @@
+import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
 
-load_dotenv()  # loading and setting the api key can be done in one step
-client = OpenAI()
+load_dotenv()
+client = OpenAI(
+    base_url=os.getenv('MSA_LLM_API_BASE', 'http://10.10.20.92:8009/v1'),
+    api_key=os.environ['MSA_LLM_API_KEY'],
+)
 
 
 # Example function to query ChatGPT
 def ask_chatgpt(messages):
     response = client.chat.completions.create(
-        model="gpt-4.1", # 사용할 모델 이름 (주의: 현재 gpt-4.1이라는 명칭은 공식적으로 없으며 gpt-4o 또는 gpt-4-turbo 등을 주로 씁니다)
+        model=os.getenv('MSA_LLM_MODEL', '/models/gpt-oss-120b'),
         messages=messages,
         temperature=1,   # 창의성 조절 (0~2 사이, 0.7은 적당히 유연한 답변을 생성)
         response_format={"type": "json_object"}, # 응답을 반드시 JSON 객체 형태로 받도록 강제함
