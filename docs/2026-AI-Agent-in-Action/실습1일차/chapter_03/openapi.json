@@ -1,0 +1,185 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Daily Task Service",
+    "description": "일일 업무 목록을 조회하는 API",
+    "version": "1.0.0"
+  },
+ "servers": [
+    {
+      "url": "https://smokeproof-ella-implosively.ngrok-free.dev",
+      "description": "개발용 서버"
+    }
+  ],
+  "paths": {
+    "/tasks/daily": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "일일 업무 목록 조회",
+        "description": "특정 날짜 기준의 업무 목록을 조회합니다. 날짜가 없으면 오늘 날짜 기준으로 반환합니다.",
+        "operationId": "get_daily_tasks_tasks_daily_get",
+        "x-openai-isConsequential": false,
+        "parameters": [
+          
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "description": "조회할 날짜 (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "nullable": true
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "description": "사용자 ID",
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyTaskResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DailyTaskResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/Task"
+            },
+            "type": "array",
+            "title": "Tasks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "tasks"
+        ],
+        "title": "DailyTaskResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Task": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "completed": {
+            "type": "boolean",
+            "title": "Completed"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Due Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "completed",
+          "due_date"
+        ],
+        "title": "Task"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

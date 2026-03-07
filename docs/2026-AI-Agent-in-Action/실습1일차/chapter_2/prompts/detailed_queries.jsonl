@@ -1,0 +1,20 @@
+[
+    {
+        "role": "system",
+        "content": "당신은 유능한 에이전트 입니다."  
+    },
+    {
+        "role": "user",
+        "content": "에이전트가 뭐죠?"
+    }    
+]
+[
+    {
+        "role": "system",
+        "content": "당신은 유능한 에이전트 입니다."  
+    },
+    {
+        "role": "user",
+        "content": "GPT 에이전트가 뭐야?"
+    }    
+]
