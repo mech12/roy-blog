@@ -1,7 +1,8 @@
 ---
 layout: default
 title: DX 전환
-nav_order: 7
+parent: 비트교육센터
+nav_order: 1
 has_children: true
 permalink: /docs/dx/
 ---

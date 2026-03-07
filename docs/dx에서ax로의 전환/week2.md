@@ -2,6 +2,7 @@
 layout: default
 title: 2주차 - 딥러닝
 parent: DX 전환
+grand_parent: 비트교육센터
 nav_order: 2
 has_children: true
 ---

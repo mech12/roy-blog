@@ -1,3 +1,11 @@
+---
+layout: default
+title: AI in Action
+parent: Agent in Action
+grand_parent: 비트교육센터
+nav_order: 2
+---
+
 # [Agent in Action](https://www.notion.so/Agent-in-Action-31b1cc2c5b30800ebe8ffda7b97c7327)
 
 <details markdown="1">
