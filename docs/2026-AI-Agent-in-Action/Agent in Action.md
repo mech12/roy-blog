@@ -1,6 +1,6 @@
 # [Agent in Action](https://www.notion.so/Agent-in-Action-31b1cc2c5b30800ebe8ffda7b97c7327)
 
-<details>
+<details markdown="1">
 <summary>환경설정하기</summary>
 
 1. anaconda 를 다운받아 설치한다
@@ -44,7 +44,8 @@ pip install  openai  python-dotenv
 
 ---
 
-## 🤖 AI Agent(인공지능 에이전트)
+<details markdown="1">
+<summary>🤖 AI Agent(인공지능 에이전트)</summary>
 
 ### 1. AI 에이전트란?
 설정된 목표를 달성하기 위해 **스스로 계획을 세우고, 도구를 사용하며, 실행까지 완료**하는 지능형 시스템입니다. 단순히 답을 주는 '백과사전'을 넘어, 업무를 대신 수행하는 **'디지털 비서'** 역할을 합니다.
@@ -75,9 +76,12 @@ pip install  openai  python-dotenv
 
 > 💡 **Tip:** 에이전트 기반의 개발 프로젝트를 시작하실 때는 설정 오류를 줄이기 위해 **Spring Initializr**를 사용하여 프로젝트 구조를 잡는 것이 가장 안정적입니다.
 
+</details>
+
 ---
 
-## 🏗️ AI 에이전트 핵심 구성 요소 (AI Agents in Action 기반)
+<details markdown="1">
+<summary>🏗️ AI 에이전트 핵심 구성 요소 (AI Agents in Action 기반)</summary>
 
 ### 1. 뇌 (The Brain: LLM)
 
@@ -113,9 +117,12 @@ pip install  openai  python-dotenv
 
 - **Multi-modality:** 텍스트뿐만 아니라 이미지, 오디오, 센서 데이터 등 다양한 형태의 입력을 이해하고 처리하는 능력입니다.
 
+</details>
+
 ---
 
-## LLM 에이전트 4가지 사용 예
+<details markdown="1">
+<summary>LLM 에이전트 4가지 사용 예</summary>
 
 ### 1. 자율 도구 사용 (Autonomous Tool Use)
 
@@ -145,9 +152,12 @@ pip install  openai  python-dotenv
 - **핵심:** ReAct(Reason+Act) 패턴이나 Reflection 기법을 사용하여 논리적 정확도를 높입니다.
 - **예시:** 코드를 작성한 후 실제로 실행해 보고, 에러 메시지가 뜨면 그 메시지를 보고 스스로 코드를 수정하여 다시 실행합니다.
 
+</details>
+
 ---
 
-## 🚀 AI 에이전트가 주목받는 4가지 핵심 이유
+<details markdown="1">
+<summary>🚀 AI 에이전트가 주목받는 4가지 핵심 이유</summary>
 
 ### 1. 수동적 응답에서 능동적 실행으로 (Action-Oriented)
 
@@ -176,9 +186,12 @@ LLM의 한계인 '데이터의 최신성'과 '할루시네이션(환각)' 문제
 
 - **이유:** `기획 에이전트`, `개발 에이전트`, `보안 검수 에이전트`가 서로 대화하며 소프트웨어를 개발하는 방식은 인간 전문가 집단이 일하는 방식과 유사하여 매우 복잡한 프로젝트도 수행 가능하게 합니다.
 
+</details>
+
 ---
 
-## 🚀 챗봇과 AI 에이전트 비교
+<details markdown="1">
+<summary>🚀 챗봇과 AI 에이전트 비교</summary>
 
 | **구분** | **일반 챗봇 (Chatbot)** | **AI 에이전트 (Agent)** |
 | --- | --- | --- |
@@ -210,9 +223,12 @@ LLM의 한계인 '데이터의 최신성'과 '할루시네이션(환각)' 문제
 - **챗봇은 '똑똑한 백과사전'입니다.** 궁금한 것을 물어보면 친절히 답해주지만, 직접 가서 예약해주거나 파일을 정리해주지는 않습니다.
 - **에이전트는 '유능한 개인 비서'입니다.** "이번 주말 여행 준비해줘"라고 하면 숙소 예약, 맛집 리스트업, 짐 싸기 체크리스트까지 스스로 완료해서 보고합니다.
 
+</details>
+
 ---
 
-## 🏗️ OpenAI API 직접 개발 vs 에이전트 기반 개발 비교
+<details markdown="1">
+<summary>🏗️ OpenAI API 직접 개발 vs 에이전트 기반 개발 비교</summary>
 
 ### ① 워크플로우의 자율성 (Autonomy)
 
@@ -237,9 +253,12 @@ LLM의 한계인 '데이터의 최신성'과 '할루시네이션(환각)' 문제
 
 > 결론 : "API 호출은 명령(Command)이고, 에이전트는 위임(Delegation)이다"
 
+</details>
+
 ---
 
-## 🔄 API 호출 개발 vs 에이전트 기반 개발: 패러다임의 전환
+<details markdown="1">
+<summary>🔄 API 호출 개발 vs 에이전트 기반 개발: 패러다임의 전환</summary>
 
 ### 1. 왜 에이전트가 API 개발을 대체할 수 있는가?
 
@@ -263,9 +282,12 @@ LLM의 한계인 '데이터의 최신성'과 '할루시네이션(환각)' 문제
 - **결과의 비결정성:** 같은 질문에도 매번 실행 경로가 달라질 수 있음 ⇒ 엄격한 가이드라인 프롬프트 및 테스트 자동화
 - **무한 루프 (Infinite Loop):** 목표를 못 찾고 계속 도구만 호출하며 루프를 도는 현상 ⇒ 최대 반복 횟수(Max Iterations) 강제 설정
 
+</details>
+
 ---
 
-## 🧠 LLM(Large Language Model)의 정의와 역할
+<details markdown="1">
+<summary>🧠 LLM(Large Language Model)의 정의와 역할</summary>
 
 ### 1. LLM이란 무엇인가?
 
@@ -295,9 +317,12 @@ LLM은 강력하지만 **환각(Hallucination)**과 **최신 정보 부재**라�
 - **RAG(검색 증강 생성):** 외부 벡터 DB를 연동하여 근거 있는 답변 유도
 - **Tool Use:** 계산기나 검색 엔진 등 외부 도구와 결합하여 정확도 향상
 
+</details>
+
 ---
 
-## ✍️ LLM 프롬프팅(Prompting) 핵심 전략 정리
+<details markdown="1">
+<summary>✍️ LLM 프롬프팅(Prompting) 핵심 전략 정리</summary>
 
 ### 1. 프롬프트의 6가지 핵심 요소 (Framework)
 
@@ -347,9 +372,12 @@ rag를 통해 어느정도 수정 가능하다
 - **부정문보다는 긍정문:** "~하지 마"보다 "~해라"라고 직접적으로 지시할 때 더 잘 따릅니다.
 - **길이 조절:** 너무 긴 프롬프트는 앞부분을 잊어버리는 'Lost in the Middle' 현상이 생길 수 있으므로, 중요한 지시는 앞이나 뒤에 배치하세요.
 
+</details>
+
 ---
 
-## 🤖 GPT Agent(GPTs / Assistants) 제작 가이드
+<details markdown="1">
+<summary>🤖 GPT Agent(GPTs / Assistants) 제작 가이드</summary>
 
 ### 1. GPT 에이전트란?
 
@@ -382,9 +410,12 @@ OpenAI의 LLM(GPT-4 등)을 기반으로 **특정 목적(Role)**을 부여하고
 
 > 💡 **개발자 Tip:** 만약 GPT 에이전트와 연동되는 백엔드 서버를 직접 구축하고 계신다면, 환경 설정 문제로 고생하지 않도록 **Spring Initializr를 사용하여 프로젝트를 생성**하는 것을 적극 추천합니다. 초기 설정이 깔끔해야 OpenAI API와의 연동 테스트가 수월해집니다.
 
+</details>
+
 ---
 
-## 🏪 GPT Store: 에이전트 생태계와 유통
+<details markdown="1">
+<summary>🏪 GPT Store: 에이전트 생태계와 유통</summary>
 
 ### 1. GPT Store란?
 
@@ -412,3 +443,5 @@ OpenAI가 제공하는 플랫폼으로, 사용자가 코딩 없이(No-Code) 만�
 
 **✅ API 연동의 확장성**
 - 단순 대화형을 넘어 `Actions`를 통해 외부 데이터베이스와 연결될 때 진정한 에이전트로서의 가치가 발생합니다.
+
+</details>
