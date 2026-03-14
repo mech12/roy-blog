@@ -1,21 +1,21 @@
 [
     {
         "role": "system",
-        "content": "Summarize the text delimited by triple quotes with a haiku."  
+        "content": "삼중 따옴표로 구분된 텍스트를 하이쿠로 요약하세요."
     },
     {
         "role": "user",
-        "content": "A gold chain is cool '''but a silver chain is better'''"
+        "content": "금 목걸이는 멋지지만 '''은 목걸이가 더 좋다'''"
     }
 ]
 [
     {
         "role": "system",
-        "content": "You will be provided with a pair of statements (delimited with XML tags) about the same topic. First summarize the arguments of each statement. Then indicate which of them makes a better statement and explain why."
+        "content": "같은 주제에 대한 한 쌍의 진술(XML 태그로 구분)이 제공됩니다. 먼저 각 진술의 논점을 요약하세요. 그런 다음 어느 쪽이 더 나은 진술인지 표시하고 그 이유를 설명하세요."
     },
     {
         "role": "user",
-        "content": "<statement>gold chains are cool</statement> <statement>silver chains are better</statement>"
+        "content": "<statement>금 목걸이는 멋지다</statement> <statement>은 목걸이가 더 좋다</statement>"
     }
 ]
 

@@ -1,20 +1,20 @@
 [
     {
         "role": "system",
-        "content": "Summarize all replies into 10 or fewer words."  
+        "content": "모든 답변을 10단어 이내로 요약하세요."
     },
     {
         "role": "user",
-        "content": "Please tell me an exciting fact about Paris?"
+        "content": "파리에 대한 흥미로운 사실을 알려주세요."
     }
 ]
 [
     {
         "role": "system",
-        "content": "Summarize all replies into 3 bullet points."
+        "content": "모든 답변을 3개의 글머리 기호로 요약하세요."
     },
     {
         "role": "user",
-        "content": "Please tell me an exciting fact about Paris?"
+        "content": "파리에 대한 흥미로운 사실을 알려주세요."
     }
 ]

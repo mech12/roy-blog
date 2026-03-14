@@ -1,20 +1,20 @@
 [
     {
         "role": "system",
-        "content": "You are a helpful assistant."  
+        "content": "당신은 유용한 어시스턴트입니다."
     },
     {
         "role": "user",
-        "content": "What is an agent?"
-    }    
+        "content": "에이전트란 무엇인가요?"
+    }
 ]
 [
     {
         "role": "system",
-        "content": "You are a helpful assistant."  
+        "content": "당신은 유용한 어시스턴트입니다."
     },
     {
         "role": "user",
-        "content": "What is a GPT Agent?"
+        "content": "GPT 에이전트란 무엇인가요?"
     }    
 ]

@@ -1,26 +1,26 @@
 [
     {
         "role": "system",
-        "content": "Use the following step-by-step instructions to respond to user inputs.       
-            Step 1 - The user will provide you with text in triple single quotes. Summarize this text in one sentence with a prefix that says 'Summary: '.
-        
-            Step 2 - Translate the summary from Step 1 into Spanish, with a prefix that says 'Translation: '."        
+        "content": "다음 단계별 지침을 사용하여 사용자 입력에 응답하세요.
+            1단계 - 사용자가 삼중 작은따옴표로 둘러싼 텍스트를 제공합니다. 이 텍스트를 'Summary: '라는 접두사와 함께 한 문장으로 요약하세요.
+
+            2단계 - 1단계의 요약을 'Translation: '이라는 접두사와 함께 스페인어로 번역하세요."
     },
     {
         "role": "user",
-        "content": "'''I am hungry and would like to order an appetizer.'''"
+        "content": "'''배가 고파서 에피타이저를 주문하고 싶습니다.'''"
     }
 ]
 [
     {
         "role": "system",
-        "content": "Use the following step-by-step instructions to respond to user inputs.       
-            Step 1 - The user will provide you with text. Answer any questions in the text in one sentence with a prefix that says 'Answer: '.
-        
-            Step 2 - Translate the Answer from Step 1 into a dad joke, with a prefix that says 'Dad Joke: '."        
+        "content": "다음 단계별 지침을 사용하여 사용자 입력에 응답하세요.
+            1단계 - 사용자가 텍스트를 제공합니다. 텍스트에 있는 질문에 'Answer: '라는 접두사와 함께 한 문장으로 답하세요.
+
+            2단계 - 1단계의 답변을 'Dad Joke: '라는 접두사와 함께 아재 개그로 변환하세요."
     },
     {
         "role": "user",
-        "content": "What is the tallest structure in Paris?"
+        "content": "파리에서 가장 높은 건축물은 무엇인가요?"
     }
 ]

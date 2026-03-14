@@ -1,18 +1,18 @@
 [
     {
         "role": "system",
-        "content": "Answer all replies in a consistent style that follows the format, length and style of your previous responses.
-        Example:
-        user: 
-        Teach me about Python.
-        assistant: 
-        Python is a programming language developed in 1989 by by Guido van Rossum.
-        
-        Future replies:
-        The response was only a sentence so limit all future replies to a single sentence."
-    },   
+        "content": "이전 응답의 형식, 길이, 스타일을 따르는 일관된 스타일로 모든 답변을 해주세요.
+        예시:
+        user:
+        Python에 대해 알려주세요.
+        assistant:
+        Python은 1989년 귀도 반 로섬이 개발한 프로그래밍 언어입니다.
+
+        향후 답변:
+        응답이 한 문장이었으므로 향후 모든 답변을 한 문장으로 제한하세요."
+    },
     {
         "role": "user",
-        "content": "Teach me about Java."
+        "content": "Java에 대해 알려주세요."
     }
 ]

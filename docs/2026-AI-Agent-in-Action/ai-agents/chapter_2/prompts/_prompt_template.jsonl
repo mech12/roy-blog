@@ -1,18 +1,18 @@
 [
     {
         "role": "system",
-        "content": "<system message>"  
+        "content": "<시스템 메시지>"
     },
     {
         "role": "user",
-        "content": "<user message>"
+        "content": "<사용자 메시지>"
     },
     {
         "role": "assistant",
-        "content": "<assistant message - demonstrated example>"
+        "content": "<어시스턴트 메시지 - 시연 예시>"
     },
     {
         "role": "user",
-        "content": "<user message>"
+        "content": "<사용자 메시지>"
     }
 ]
