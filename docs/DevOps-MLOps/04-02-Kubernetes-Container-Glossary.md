@@ -25,8 +25,8 @@
 |------|------|
 | **Cluster** | Control Plane + Worker Node들로 구성된 Kubernetes 전체 환경 |
 | **Control Plane** | 클러스터를 관리하는 마스터 컴포넌트 집합 (API Server, etcd, Scheduler, Controller Manager) |
-| **API Server** | 모든 K8s 요청의 진입점. `kubectl`, 내부 컴포넌트, 외부 시스템 모두 여기를 통한다 |
-| **etcd** | 클러스터의 모든 상태를 저장하는 분산 Key-Value 저장소 |
+| **API Server** | 모든 K8s 요청의 진입점. `kubectl`, 내부 컴포넌트, 외부 시스템 모두 여기를 통한다. **etcd에 접근할 수 있는 유일한 컴포넌트**로, API Gateway(중계자)와 달리 직접 상태를 검증·저장하는 "은행 창구" 역할 |
+| **etcd** | 클러스터의 모든 상태를 저장하는 분산 Key-Value 저장소. 이름은 Linux `/etc`(설정 디렉토리) + **d**istributed의 합성어 |
 | **Scheduler** | 새로 생성된 Pod를 어느 Node에 배치할지 결정 (리소스, affinity, taint 등 고려) |
 | **Controller Manager** | 현재 상태를 선언된 상태(desired state)와 일치시키는 제어 루프 집합 |
 | **kubelet** | 각 Worker Node에서 실행되며 Pod의 생성/삭제/상태 보고를 담당하는 에이전트 |
@@ -57,7 +57,8 @@
 | **ClusterIP** | Service의 기본 타입. 클러스터 내부에서만 접근 가능한 가상 IP |
 | **NodePort** | 모든 Node의 특정 포트를 열어 외부에서 접근 가능하게 하는 Service 타입 |
 | **LoadBalancer** | 클라우드 프로바이더의 LB를 자동 생성하여 외부 트래픽을 받는 Service 타입 |
-| **Ingress** | HTTP/HTTPS 트래픽을 URL 경로/호스트 기반으로 내부 Service에 라우팅하는 규칙 |
+| **Ingress** | HTTP/HTTPS 트래픽을 URL 경로/호스트 기반으로 내부 Service에 라우팅하는 규칙. 라틴어 "ingressus"(들어감)에서 유래 — 외부→클러스터 안으로 들어오는 트래픽을 의미. 반대 방향은 **Egress**(나가는 트래픽) |
+| **Egress** | 클러스터 → 외부로 나가는 트래픽. 방화벽/네트워크 정책에서 Ingress(인바운드)와 쌍으로 사용 |
 | **Ingress Controller** | Ingress 규칙을 실제로 처리하는 리버스 프록시 (Traefik, Nginx 등) |
 | **CNI** | Container Network Interface. Pod 간 네트워크를 구성하는 플러그인 규격 (Flannel, Calico 등) |
 | **CoreDNS** | 클러스터 내부 DNS 서버. `서비스명.네임스페이스.svc.cluster.local` 형태로 해석 |
@@ -117,6 +118,35 @@
 | **K0s** | K3s와 유사한 경량 K8s 배포판. Mirantis가 관리 |
 | **MicroK8s** | Canonical(Ubuntu)의 경량 K8s. snap으로 설치 |
 | **Kind** | Kubernetes IN Docker. Docker 컨테이너로 K8s 클러스터를 실행 (로컬 테스트용) |
+
+---
+
+## Traefik vs Nginx
+
+둘 다 **리버스 프록시 + 로드밸런서**이지만, 설계 철학이 다르다.
+
+| 구분 | Nginx | Traefik |
+|------|-------|---------|
+| **설정 방식** | 정적 (`nginx.conf` 수동 편집) | 동적 (K8s/Docker 변화를 자동 감지) |
+| **서비스 발견** | 수동 upstream 설정 | 자동 (컨테이너 생성 시 즉시 인식) |
+| **HTTPS** | 수동으로 인증서 설정 | Let's Encrypt 자동 발급/갱신 |
+| **설정 리로드** | `nginx -s reload` 필요 | 무중단 자동 반영 |
+| **성능** | 매우 높음 (C로 작성) | 약간 낮음 (Go로 작성) |
+| **대시보드** | 별도 설정 필요 | 내장 웹 UI 제공 |
+
+```
+Nginx가 적합한 경우:
+  - 정적 파일 서빙 (웹서버 역할 겸용)
+  - 고성능/대용량 트래픽
+  - VM 기반 전통적 인프라
+
+Traefik이 적합한 경우:
+  - K8s / Docker 환경 (서비스가 수시로 뜨고 꺼짐)
+  - 자동 서비스 발견이 필요한 동적 환경
+  - K3s 기본 Ingress Controller로 채택된 이유
+```
+
+> K3s가 Traefik을 기본 탑재한 이유: 컨테이너가 동적으로 생성/삭제될 때 설정을 **자동 반영**하기 때문. Nginx는 범용 고성능, Traefik은 컨테이너 환경 자동화에 강하다.
 
 ---
 
