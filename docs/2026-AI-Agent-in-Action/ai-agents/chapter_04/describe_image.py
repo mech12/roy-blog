@@ -27,7 +27,7 @@ def describe_image(image_path="animals.png") -> str:
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "What’s in this image?"},
+                    {"type": "text", "text": "이 이미지에 무엇이 있나요?"},
                     {
                         "type": "image_url",
                         "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"},

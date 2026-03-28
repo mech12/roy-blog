@@ -1,100 +1,174 @@
-# Chapter 04: 멀티 에이전트 프레임워크 - AutoGen과 CrewAI
+# Chapter 04 - 멀티 에이전트 프레임워크 예제
 
-## 환경 설정
+AutoGen과 CrewAI를 활용한 멀티 에이전트 협업 예제 모음입니다.
 
-의존성 충돌을 방지하기 위해 uv로 프로젝트 전용 가상환경을 생성하여 사용한다.
+---
+
+## 1. 사전 준비 요약
+
+### 필요한 외부 서비스 (SaaS)
+
+| 서비스 | 필수 여부 | 가입 URL | 필요한 키 | 사용하는 파일 |
+|--------|-----------|----------|-----------|---------------|
+| **OpenAI API** | 필수 | https://platform.openai.com | `OPENAI_API_KEY` | 전체 파일 |
+| **AgentOps** | 선택 | https://app.agentops.ai | `AGENTOPS_API_KEY` | crewai_agentops.py, crewai_coding_crew.py, crewai_hierarchy.py |
+| **Azure OpenAI** | 선택 | https://portal.azure.com | api_key, base_url | AutoGen 파일 (OAI_CONFIG_LIST에서 설정) |
+
+> **AgentOps**는 에이전트 실행을 모니터링/추적하는 SaaS 서비스입니다.
+> 무료 플랜이 있으며, API 키 없이 실행하면 경고만 출력되고 동작은 합니다.
+> 필요 없다면 해당 파일에서 `agentops.init()` 줄을 주석 처리해도 됩니다.
+
+---
+
+## 2. 환경 설정
+
+### 2-1. Python 패키지 설치
 
 ```bash
-# 설치 (가상환경 생성 + 의존성 설치)
+make install
+```
+
+또는 수동 설치:
+
+```bash
+pip install pyautogen crewai[tools] python-dotenv agentops langchain-openai requests pygame
+```
+
+### 2-2. AutoGen 설정 파일 (`OAI_CONFIG_LIST`)
+
+AutoGen 예제 4개 파일이 이 파일을 읽습니다.
+
+```bash
+cp OAI_CONFIG_LIST.sample OAI_CONFIG_LIST
+```
+
+`OAI_CONFIG_LIST` 파일을 열고 주석(// 줄) 4줄을 제거한 뒤, API 키를 입력합니다:
+
+```json
+[
+    {
+        "model": "gpt-4.1",
+        "api_key": "sk-여기에-OpenAI-API-키-입력",
+        "tags": ["gpt-4", "tool"]
+    }
+]
+```
+
+> Azure OpenAI를 사용하려면 sample 파일의 두 번째/세 번째 항목도 설정하세요.
+
+### 2-3. CrewAI 설정 파일 (`.env`)
+
+CrewAI 예제 4개 + describe_image.py가 `.env`를 읽습니다.
+
+```bash
+# .env 파일 생성
+cat <<'EOF' > .env
+OPENAI_API_KEY=sk-여기에-OpenAI-API-키-입력
+AGENTOPS_API_KEY=여기에-AgentOps-API-키-입력
+OPEN_API_KEY=sk-여기에-OpenAI-API-키-입력
+EOF
+```
+
+| 환경변수 | 용도 | 필수 여부 |
+|----------|------|-----------|
+| `OPENAI_API_KEY` | CrewAI가 LLM 호출에 사용 | 필수 (CrewAI 파일) |
+| `AGENTOPS_API_KEY` | AgentOps 모니터링 대시보드 연동 | 선택 (없으면 경고만 출력) |
+| `OPEN_API_KEY` | describe_image.py에서 OpenAI Vision API 호출 | 필수 (describe_image만) |
+
+---
+
+## 3. 파일별 상세 정보
+
+### AutoGen 예제
+
+| 파일 | 설명 | 설정 파일 | 외부 서비스 | 실행 모드 |
+|------|------|-----------|-------------|-----------|
+| `autogen_start.py` | 단일 에이전트가 스네이크 게임 코딩 | OAI_CONFIG_LIST | OpenAI API | 대화형 (사용자 입력 필요) |
+| `autogen_coding_critic.py` | 엔지니어 + 리뷰어 2인 협업 | OAI_CONFIG_LIST | OpenAI API | 대화형 |
+| `autogen_coding_critic_cache.py` | 위와 동일 + 디스크 캐시 적용 | OAI_CONFIG_LIST | OpenAI API | 대화형 |
+| `autogen_coding_group.py` | 엔지니어 + 비평가 그룹채팅 | OAI_CONFIG_LIST | OpenAI API | 자동 (입력 불필요) |
+
+- AutoGen은 `config_list_from_json(env_or_file="OAI_CONFIG_LIST")`로 설정을 로드합니다.
+- 대화형 예제는 터미널에서 사용자 입력을 기다립니다 (빈 줄 입력 = 자동 응답, "exit" = 종료).
+- `working/` 디렉토리에 에이전트가 생성한 코드가 저장됩니다.
+
+### CrewAI 예제
+
+| 파일 | 설명 | 설정 파일 | 외부 서비스 | 실행 모드 |
+|------|------|-----------|-------------|-----------|
+| `crewai_introduction.py` | 유머 연구원 + 작가 기본 예제 | .env | OpenAI API | 자동 |
+| `crewai_agentops.py` | 위와 동일 + AgentOps 추적 | .env | OpenAI API, **AgentOps** | 자동 |
+| `crewai_coding_crew.py` | 3인 게임 코딩 Crew (Sequential) | .env | OpenAI API, **AgentOps** | 대화형 (게임 설명 입력) |
+| `crewai_hierarchy.py` | 3인 게임 코딩 Crew (Hierarchical) | .env | OpenAI API, **AgentOps** | 대화형 (게임 설명 입력) |
+
+- CrewAI는 `load_dotenv()`로 `.env` 파일에서 환경변수를 로드합니다.
+- `crewai_hierarchy.py`는 추가로 `langchain-openai` 패키지가 필요합니다 (매니저 LLM 용도).
+- `the_best_joke.md` 파일이 출력물로 생성됩니다 (crewai_introduction, crewai_agentops).
+
+### 기타
+
+| 파일 | 설명 | 설정 파일 | 외부 서비스 | 실행 모드 |
+|------|------|-----------|-------------|-----------|
+| `describe_image.py` | GPT-4 Vision으로 이미지 설명 | .env 또는 환경변수 | OpenAI API | 함수 호출 |
+
+- `OPEN_API_KEY` 환경변수로 OpenAI API 키를 읽습니다 (주의: `OPENAI_API_KEY`가 아님).
+- 기본 이미지 경로는 `animals.png` (이 폴더에 포함되어 있음).
+
+---
+
+## 4. 실행 방법
+
+```bash
+# 도움말
+make help
+
+# 패키지 설치
 make install
 
-# AutoGen Studio 실행
-make autogen
+# AutoGen 예제
+make run-autogen-start          # 기본 단일 에이전트
+make run-autogen-critic         # 엔지니어 + 리뷰어
+make run-autogen-critic-cache   # 엔지니어 + 리뷰어 + 캐시
+make run-autogen-group          # 그룹채팅 (자동)
 
-# 가상환경 삭제
-make clean
+# CrewAI 예제
+make run-crewai-intro           # 유머 Crew 기본
+make run-crewai-agentops        # 유머 Crew + AgentOps
+make run-crewai-coding          # 게임 코딩 Crew (Sequential)
+make run-crewai-hierarchy       # 게임 코딩 Crew (Hierarchical)
+
+# 기타
+make run-describe-image         # GPT-4 Vision 이미지 설명
 ```
 
-개별 스크립트 실행 시:
+---
 
-```bash
-.venv/bin/python autogen_start.py
-```
+## 5. 비용 참고
+
+모든 예제는 OpenAI API를 호출하므로 **API 사용량에 따라 비용이 발생**합니다.
+
+- 멀티 에이전트 예제는 여러 번의 LLM 호출이 연쇄적으로 발생합니다.
+- 특히 `autogen_coding_group.py`(max_round=20)와 CrewAI 예제는 토큰 소모가 클 수 있습니다.
+- `autogen_coding_critic_cache.py`는 디스크 캐시를 사용하여 동일 요청의 반복 비용을 절감합니다.
 
 ---
 
-## 개요
+## 6. 생성되는 파일/디렉토리
 
-이 챕터에서는 멀티 에이전트 시스템을 구축하기 위한 두 가지 주요 프레임워크인 **AutoGen**과 **CrewAI**를 실습한다. 단일 에이전트의 한계를 넘어, 여러 에이전트가 협업하여 코드 작성, 코드 리뷰, 품질 검증 등 복잡한 작업을 수행하는 방법을 다룬다. 또한 AgentOps를 활용한 에이전트 모니터링과 GPT-4 Vision을 이용한 이미지 분석 기능도 함께 살펴본다.
-
----
-
-## 파일 설명
-
-### AutoGen 관련 파일
-
-| 파일명 | 설명 |
-|--------|------|
-| `autogen_start.py` | AutoGen 입문 예제. `ConversableAgent`와 `UserProxyAgent`를 사용하여 가장 기본적인 대화 흐름을 구성한다. 사용자 대리 에이전트가 어시스턴트에게 Pygame 스네이크 게임 작성을 요청하는 단순한 구조이다. |
-| `autogen_coding_critic.py` | 엔지니어 에이전트와 코드 리뷰어 에이전트를 분리 구성한 예제. `register_nested_chats`를 활용하여 엔지니어가 코드를 작성하면 자동으로 리뷰어가 코드를 검토하는 중첩 대화 패턴을 구현한다. |
-| `autogen_coding_critic_cache.py` | 위 `autogen_coding_critic.py`에 디스크 캐시(`Cache.disk`)를 추가한 버전. LLM 호출 결과를 캐싱하여 반복 실행 시 비용과 시간을 절약하는 방법을 보여준다. |
-| `autogen_coding_group.py` | `GroupChat`과 `GroupChatManager`를 활용한 그룹 채팅 예제. 사용자, 엔지니어, 비평가(Critic) 세 에이전트가 하나의 그룹 채팅 안에서 자유롭게 대화하며 게임 코드를 작성하고 평가한다. 비평가는 버그, 게임플레이, 목표 준수, 미적 요소 등 다차원 평가 점수를 부여한다. |
-
-### CrewAI 관련 파일
-
-| 파일명 | 설명 |
-|--------|------|
-| `crewai_introduction.py` | CrewAI 입문 예제. 농담 연구자(Joke Researcher)와 농담 작가(Joke Writer) 두 에이전트로 구성된 Crew가 순차적으로 작업을 수행하여 AI 엔지니어 농담을 생성한다. 결과는 `the_best_joke.md` 파일로 출력된다. |
-| `crewai_agentops.py` | 위 `crewai_introduction.py`에 AgentOps 모니터링을 추가한 버전. `agentops.init()`을 통해 에이전트 실행 과정을 추적하고 분석할 수 있다. |
-| `crewai_coding_crew.py` | 시니어 엔지니어, QA 엔지니어, 수석 QA 엔지니어 세 에이전트로 구성된 코딩 Crew. 순차적 프로세스(`Process.sequential`)로 코드 작성, 오류 검사, 최종 검증 단계를 거치며 게임을 개발한다. |
-| `crewai_hierarchy.py` | `crewai_coding_crew.py`와 동일한 에이전트 구성이지만 계층적 프로세스(`Process.hierarchical`)를 사용한다. 매니저 LLM(`ChatOpenAI`)이 작업 배분과 에이전트 간 조율을 자동으로 관리하는 방식을 보여준다. |
-
-### 기타 파일
-
-| 파일명 | 설명 |
-|--------|------|
-| `describe_image.py` | GPT-4 Vision API를 사용하여 이미지를 분석하고 설명하는 유틸리티 함수. 이미지를 base64로 인코딩하여 API에 전송하는 방식을 구현한다. 에이전트에 도구(tool)로 연결하여 활용할 수 있다. |
-| `OAI_CONFIG_LIST.sample` | AutoGen에서 사용하는 LLM 설정 파일의 샘플. OpenAI API와 Azure OpenAI API 모두를 지원하는 구성 예시를 포함한다. 실제 사용 시 API 키를 입력하고 파일명에서 `.sample`을 제거해야 한다. |
-| `requirements.txt` | 프로젝트 의존성 목록. `autogenstudio`, `pyautogen`, `crewai[tools]`, `python-dotenv`, `langchain` 패키지를 포함한다. |
-| `the_best_joke.md` | CrewAI 농담 생성 Crew의 실행 결과 파일. AI 엔지니어를 주제로 한 농담이 저장되어 있다. |
+| 경로 | 설명 | 생성 주체 |
+|------|------|-----------|
+| `working/` | AutoGen 에이전트가 생성한 코드 저장 | AutoGen 예제 |
+| `the_best_joke.md` | CrewAI 유머 작가의 출력물 | crewai_introduction, crewai_agentops |
+| `.cache/` | AutoGen 디스크 캐시 | autogen_coding_critic_cache, autogen_coding_group |
 
 ---
 
-## 핵심 개념
+## 7. 트러블슈팅
 
-### AutoGen 핵심 개념
-- **ConversableAgent / AssistantAgent**: LLM 기반으로 대화하고 작업을 수행하는 에이전트
-- **UserProxyAgent**: 사용자를 대리하는 에이전트로, 코드 실행 환경(`code_execution_config`)을 설정할 수 있음
-- **중첩 대화 (Nested Chats)**: `register_nested_chats`를 통해 특정 트리거 조건에서 별도의 대화를 자동 실행하는 패턴
-- **그룹 채팅 (GroupChat)**: 여러 에이전트가 하나의 대화 공간에서 자유롭게 상호작용하는 구조
-- **디스크 캐시 (Cache.disk)**: LLM 응답을 로컬에 캐싱하여 동일 요청의 반복 호출을 방지
-
-### CrewAI 핵심 개념
-- **Agent**: 역할(role), 목표(goal), 배경(backstory)으로 정의되는 작업 수행 주체
-- **Task**: 설명(description)과 기대 출력(expected_output)으로 정의되는 작업 단위
-- **Crew**: 에이전트와 태스크를 묶어 하나의 팀으로 구성하는 단위
-- **순차적 프로세스 (Process.sequential)**: 태스크를 정의된 순서대로 실행
-- **계층적 프로세스 (Process.hierarchical)**: 매니저 LLM이 작업 배분과 에이전트 조율을 자동 관리
-- **위임 (allow_delegation)**: 에이전트가 다른 에이전트에게 작업을 위임할 수 있는지 여부
-
-### 공통 개념
-- **AgentOps**: 에이전트 실행 과정을 모니터링하고 추적하는 도구
-- **GPT-4 Vision**: 이미지를 입력받아 분석하고 설명하는 멀티모달 기능
-
----
-
-## 학습 교훈
-
-1. **단일 에이전트보다 멀티 에이전트가 효과적인 경우가 있다.** 코드 작성과 코드 리뷰를 별도의 에이전트로 분리하면 각 에이전트가 자신의 역할에 집중할 수 있어 결과물의 품질이 향상된다. 하나의 에이전트에 모든 책임을 부여하면 역할 간 충돌이 발생할 수 있다.
-
-2. **프레임워크 선택은 작업 특성에 따라 달라진다.** AutoGen은 에이전트 간 자유로운 대화와 코드 실행에 강점이 있고, CrewAI는 역할 기반의 구조화된 워크플로우 정의에 강점이 있다. 두 프레임워크의 차이를 이해하고 상황에 맞게 선택하는 것이 중요하다.
-
-3. **캐싱은 개발 과정에서 필수적이다.** LLM 호출은 비용이 발생하고 응답 시간이 길기 때문에, 개발 및 디버깅 단계에서 `Cache.disk`와 같은 캐싱 메커니즘을 활용하면 효율성을 크게 높일 수 있다.
-
-4. **순차적 프로세스와 계층적 프로세스는 서로 다른 장단점이 있다.** 순차적 프로세스는 흐름이 명확하고 예측 가능하지만, 계층적 프로세스는 매니저가 상황에 따라 유연하게 작업을 배분할 수 있다. 작업의 복잡도와 에이전트 간 의존성에 따라 적절한 방식을 선택해야 한다.
-
-5. **에이전트의 시스템 프롬프트 설계가 결과 품질을 좌우한다.** 비평가(Critic) 에이전트에 다차원 평가 기준(버그, 게임플레이, 목표 준수, 미적 요소)을 명시하면 더 체계적이고 유용한 피드백을 얻을 수 있다. 에이전트의 역할과 기대 행동을 구체적으로 정의할수록 좋은 결과를 얻는다.
-
-6. **모니터링 도구를 초기부터 도입하는 것이 좋다.** AgentOps와 같은 모니터링 도구를 초기 단계부터 통합하면, 에이전트의 동작을 추적하고 문제를 조기에 발견할 수 있어 디버깅 시간을 크게 줄일 수 있다.
-
-7. **멀티모달 기능은 에이전트의 활용 범위를 넓힌다.** `describe_image.py`와 같이 이미지 분석 기능을 도구로 만들어 에이전트에 연결하면, 텍스트뿐 아니라 시각적 정보까지 처리할 수 있는 에이전트를 구축할 수 있다.
+| 증상 | 원인 | 해결 |
+|------|------|------|
+| `FileNotFoundError: OAI_CONFIG_LIST` | 설정 파일 없음 | `cp OAI_CONFIG_LIST.sample OAI_CONFIG_LIST` 후 API 키 입력 |
+| `AuthenticationError` | API 키가 잘못됨 | OAI_CONFIG_LIST 또는 .env의 키 확인 |
+| `agentops` 관련 Warning | AGENTOPS_API_KEY 미설정 | .env에 키 추가하거나, 무시해도 실행에 문제 없음 |
+| `ModuleNotFoundError: No module named 'crewai'` | 패키지 미설치 | `make install` 실행 |
+| `KeyError: 'OPEN_API_KEY'` | describe_image용 키 미설정 | .env에 `OPEN_API_KEY=sk-...` 추가 |

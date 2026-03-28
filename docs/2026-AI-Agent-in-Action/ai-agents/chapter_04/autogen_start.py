@@ -18,4 +18,4 @@ user_proxy = UserProxyAgent(
 )
 
 # Start the conversation.
-user_proxy.initiate_chat(assistant, message="write a snake game using Pygame?")
+user_proxy.initiate_chat(assistant, message="Pygame을 사용하여 스네이크 게임을 만들어 주세요.")
