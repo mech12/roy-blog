@@ -11,3 +11,6 @@ __pycache__/
 .env
 .bundle/
 *.zip
+
+logs
+.setting
