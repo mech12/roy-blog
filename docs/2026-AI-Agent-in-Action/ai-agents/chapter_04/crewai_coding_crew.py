@@ -92,7 +92,7 @@ evaluate_task = Task(
 crew = Crew(
     agents=[senior_engineer_agent, qa_engineer_agent, chief_qa_engineer_agent],
     tasks=[code_task, qa_task, evaluate_task],
-    verbose=2,  # You can set it to 1 or 2 to different logging levels
+    verbose=True,
     process=Process.sequential,
 )
 
