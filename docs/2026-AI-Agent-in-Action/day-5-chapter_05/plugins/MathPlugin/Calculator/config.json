@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "description": "사칙연산을 수행하는 함수",
+  "execution_settings": {
+    "default": {
+      "max_tokens": 500,
+      "temperature": 0.1
+    }
+  },
+  "input_variables": [
+    {
+      "name": "operation",
+      "description": "수행할 연산 (더하기, 빼기 등)",
+      "is_required": true
+    },
+    {
+      "name": "input1",
+      "description": "첫 번째 숫자",
+      "is_required": true
+    },
+    {
+      "name": "input2",
+      "description": "두 번째 숫자",
+      "is_required": true
+    }
+  ]
+}

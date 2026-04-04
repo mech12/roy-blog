@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "sk-python-hello-world"
+version = "0.1.0"
+description = "A starter application using the semantic kernel"
+authors = ["Your Name littleconan@hanmail.net"] # 본인 이메일로
+readme = "README.md"
+packages = [{include = "hello_world"}]
+
+[tool.poetry.dependencies]
+python = "^3.10" # 시맨틱 커널 최신 버전은 3.10 이상을 권장합니다.
+semantic-kernel = "^1.0.0" # 최신 안정화 버전으로 변경
+python-dotenv = "^1.0.0"   # API Key 관리를 위해 필수적으로 추가하세요.
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0.0" # 최신 버전 유지
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

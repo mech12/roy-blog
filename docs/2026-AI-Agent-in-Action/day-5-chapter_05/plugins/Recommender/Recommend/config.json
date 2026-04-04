@@ -1,0 +1,40 @@
+{
+    "schema": 1,
+    "type": "completion",
+    "description": "사용자의 요청에 따라 최적의 콘텐츠를 추천합니다.",
+    "execution_settings": {
+        "default": {
+            "max_tokens": 512,
+            "temperature": 0.7,
+            "top_p": 1.0,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0
+        }
+    },
+    "input_variables": [
+        {
+            "name": "subject",
+            "type": "string",
+            "description": "추천받고 싶은 주제 (예: 시간 여행, 요리, 인공지능)",
+            "is_required": true
+        },
+        {
+            "name": "format",
+            "type": "string",
+            "description": "추천받을 형식 (예: 영화, 책, 유튜브 채널)",
+            "is_required": true
+        },
+        {
+            "name": "genre",
+            "type": "string",
+            "description": "선호하는 장르 (예: 코미디, 스릴러, 다큐멘터리)",
+            "is_required": true
+        },
+        {
+            "name": "custom",
+            "type": "string",
+            "description": "추가 요구사항 (예: 반드시 실화 바탕이어야 함)",
+            "is_required": true
+        }
+    ]
+}
