@@ -12,7 +12,11 @@ class EmergencyMonitor(py_trees.behaviour.Behaviour):
         self.blackboard.register_key(key="fire_alarm", access=py_trees.common.Access.READ)
 
     def update(self):
-        if getattr(self.blackboard, "fire_alarm", False):
+        try:
+            alarm = self.blackboard.fire_alarm
+        except KeyError:
+            alarm = False
+        if alarm:
             print("🚨 [Reactive] 화재 감지! 모든 업무를 중단하고 대피합니다!")
             return py_trees.common.Status.SUCCESS # 우선순위가 높으므로 여기서 트리 종료
         return py_trees.common.Status.FAILURE # 화재 없으면 다음 우선순위로 양보

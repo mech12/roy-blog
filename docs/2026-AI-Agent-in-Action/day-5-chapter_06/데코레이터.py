@@ -25,7 +25,7 @@ network_task = UnstableNetworkNode("Connect to Server")
 retry_decorator = py_trees.decorators.Retry(
     name="Retry Decorator (Max 5)",
     child=network_task,
-    num_attempts=5
+    num_failures=5
 )
 
 print("--- 데코레이터(Retry) 테스트 시작 ---")

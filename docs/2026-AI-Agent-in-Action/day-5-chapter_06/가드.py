@@ -12,12 +12,14 @@ class ApiKeyGuard(py_trees.behaviour.Behaviour):
 
     def update(self):
         # 자바의 if (apiKey == null) throw Exception; 과 같은 논리
-        if hasattr(self.blackboard, "api_key") and self.blackboard.api_key:
-            print("[Guard] API 키 발견! 다음 단계로 진행합니다.")
-            return py_trees.common.Status.SUCCESS
-        else:
-            print("[Guard] API 키가 없습니다. 동작을 차단합니다.")
-            return py_trees.common.Status.FAILURE
+        try:
+            if self.blackboard.api_key:
+                print("[Guard] API 키 발견! 다음 단계로 진행합니다.")
+                return py_trees.common.Status.SUCCESS
+        except KeyError:
+            pass
+        print("[Guard] API 키가 없습니다. 동작을 차단합니다.")
+        return py_trees.common.Status.FAILURE
 
 # [트리 구성] 가드가 통과해야만 실제 업무(Task)가 실행됨
 guard = ApiKeyGuard("Check API Key")
