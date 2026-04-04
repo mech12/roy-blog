@@ -4,7 +4,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY", "none"),
+    base_url=os.getenv("OPENAI_API_BASE"),
+)
+model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
 
 # 1. 실제 실행될 로컬 함수 (비즈니스 로직)
 def recommend(topic, rating="good"):
@@ -64,7 +68,7 @@ def run_conversation(user_input):
 
     # 모델에게 첫 번째 요청 (함수 호출 여부 판단)
     response = client.chat.completions.create(
-        model="gpt-4o", # gpt-4.1 대신 gpt-4o 권장
+        model=model_id,
         messages=messages,
         tools=tools,
         tool_choice="auto",
@@ -101,7 +105,7 @@ def run_conversation(user_input):
 
         # 모든 함수 실행 결과를 들고 모델에게 최종 답변 요청
         second_response = client.chat.completions.create(
-            model="gpt-4o",
+            model=model_id,
             messages=messages,
         )
         return second_response.choices[0].message.content

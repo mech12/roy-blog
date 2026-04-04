@@ -7,6 +7,7 @@ import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAIChatPromptExecutionSettings
 from semantic_kernel.functions import KernelArguments
 from semantic_kernel.prompt_template import PromptTemplateConfig, InputVariable
+from openai import AsyncOpenAI
 
 # 1. 환경 변수(.env) 로드
 load_dotenv()
@@ -15,13 +16,17 @@ async def main():
     # 커널 초기화 (에이전트의 몸체 생성)
     kernel = sk.Kernel()
 
-    # 2. AI 서비스 설정 (LLM 엔진 장착)
+    # 2. AI 서비스 설정 (.env.example 참조)
     service_id = "oai_chat_gpt"
+    api_key = os.getenv("OPENAI_API_KEY", "none")
+    api_base = os.getenv("OPENAI_API_BASE")
+    model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
+
     kernel.add_service(
         OpenAIChatCompletion(
             service_id=service_id,
-            ai_model_id="gpt-4o",
-            api_key=os.getenv("OPENAI_API_KEY"),
+            ai_model_id=model_id,
+            async_client=AsyncOpenAI(api_key=api_key, base_url=api_base),
         ),
     )
 

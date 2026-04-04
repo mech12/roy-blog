@@ -4,18 +4,23 @@ from dotenv import load_dotenv
 import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
 from semantic_kernel.functions import KernelArguments
+from openai import AsyncOpenAI
 
 load_dotenv()
 
 async def main():
     kernel = sk.Kernel()
 
-    # 1. AI 서비스 등록
+    # 1. AI 서비스 등록 (.env.example 참조)
+    api_key = os.getenv("OPENAI_API_KEY", "none")
+    api_base = os.getenv("OPENAI_API_BASE")
+    model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
+
     kernel.add_service(
         OpenAIChatCompletion(
             service_id="travel_service",
-            ai_model_id="gpt-4o",
-            api_key=os.getenv("OPENAI_API_KEY")
+            ai_model_id=model_id,
+            async_client=AsyncOpenAI(api_key=api_key, base_url=api_base),
         )
     )
 

@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
 from semantic_kernel.functions import KernelArguments, KernelPlugin
+from openai import AsyncOpenAI
 
 # 1. 환경 변수 로드
 load_dotenv()
@@ -13,15 +14,17 @@ async def main():
     # 커널 초기화
     kernel = sk.Kernel()
 
-    # 2. AI 서비스 설정 (v1.x 정석)
-    api_key = os.getenv("OPENAI_API_KEY")
+    # 2. AI 서비스 설정 (.env.example 참조)
+    api_key = os.getenv("OPENAI_API_KEY", "none")
+    api_base = os.getenv("OPENAI_API_BASE")
+    model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
     service_id = "oai_chat"
-    
+
     kernel.add_service(
         OpenAIChatCompletion(
             service_id=service_id,
-            ai_model_id="gpt-4o", # 강사님, 최신 gpt-4o 권장드립니다.
-            api_key=api_key
+            ai_model_id=model_id,
+            async_client=AsyncOpenAI(api_key=api_key, base_url=api_base),
         )
     )
 

@@ -7,8 +7,14 @@ import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAIChatPromptExecutionSettings
 from semantic_kernel.functions import KernelArguments
 from semantic_kernel.prompt_template import PromptTemplateConfig, InputVariable
+from openai import AsyncOpenAI
 
 load_dotenv()
+
+# 환경 변수 (.env.example 참조)
+api_key = os.getenv("OPENAI_API_KEY", "none")
+api_base = os.getenv("OPENAI_API_BASE")
+model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
 
 # 통합 판단 및 추출 프롬프트
 router_prompt = """
@@ -30,7 +36,7 @@ async def main():
     service_id = "oai_chat_gpt"
     
     kernel.add_service(
-        OpenAIChatCompletion(service_id=service_id, ai_model_id="gpt-4o", api_key=os.getenv("OPENAI_API_KEY"))
+        OpenAIChatCompletion(service_id=service_id, ai_model_id=model_id, async_client=AsyncOpenAI(api_key=api_key, base_url=api_base))
     )
 
     execution_settings = OpenAIChatPromptExecutionSettings(service_id=service_id, max_tokens=1000, temperature=0.3)

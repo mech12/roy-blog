@@ -3,8 +3,11 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
-client = OpenAI(api_key=api_key)
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY", "none"),
+    base_url=os.getenv("OPENAI_API_BASE"),
+)
+model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
 
 #함수의 설계도만 필요하다. 실제 함수는 gpt입장에서는 필요가 없다 
 #내가 사용자가 만든 함수의 정보만 전달한다. => 보안이나 정교함 때문입니다. 내 파이썬 함수의 소스코드가 외부에 노출되는 것을 막고, AI에게 전달될 설명을 개발자가 더 세밀
@@ -38,7 +41,7 @@ tools=[
 
 def ask_chatgpt(user_message):    
     response = client.chat.completions.create(
-        model="gpt-4o",  # gpt-4.1 대신 최신 모델인 gpt-4o를 권장합니다.
+        model=model_id,
         messages=[
             {"role": "system", "content": "당신은 사용자의 요청을 분석하여 적절한 도구를 선택하는 유능한 비서입니다."},
             {"role": "user", "content": user_message}

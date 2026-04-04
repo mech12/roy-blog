@@ -7,6 +7,7 @@ from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAICh
 from semantic_kernel.contents import ChatHistory
 from semantic_kernel.functions import KernelArguments
 import semantic_kernel.connectors.ai as ai
+from openai import AsyncOpenAI
 
 # TMDb 서비스 플러그인 임포트 (기존 클래스 그대로 사용 가정)
 from plugins.Movies.tmdb import TMDbService
@@ -16,13 +17,17 @@ load_dotenv()
 async def main():
     kernel = sk.Kernel()
 
-    # 1. AI 서비스 설정
+    # 1. AI 서비스 설정 (.env.example 참조)
     service_id = "oai_chat"
+    api_key = os.getenv("OPENAI_API_KEY", "none")
+    api_base = os.getenv("OPENAI_API_BASE")
+    model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
+
     kernel.add_service(
         OpenAIChatCompletion(
             service_id=service_id,
-            ai_model_id="gpt-4o",
-            api_key=os.getenv("OPENAI_API_KEY")
+            ai_model_id=model_id,
+            async_client=AsyncOpenAI(api_key=api_key, base_url=api_base),
         )
     )
 
