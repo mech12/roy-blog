@@ -38,11 +38,15 @@ async def main():
     # 3. 자동 함수 호출 설정 (핵심!)
     # execution_settings에서 tool_call_behavior를 'auto'로 설정하면
     # 모델이 필요할 때 알아서 TMDB 플러그인을 호출합니다.
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
     execution_settings = OpenAIChatPromptExecutionSettings(
         service_id=service_id,
         max_tokens=2000,
         temperature=0.7,
-        tool_call_behavior="auto" # 모델이 스스로 도구를 선택함
+        tool_call_behavior="auto", # 모델이 스스로 도구를 선택함
+        extra_body=extra_body,
     )
 
     # 특정 플러그인/함수만 선택하거나 제외하는 최신 방식

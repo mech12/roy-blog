@@ -81,11 +81,15 @@ async def main():
     seen_movie_list = str(seen_movies_result)
     print(f"📍 불러온 시청 목록: {seen_movie_list}")
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
     # (2) LLM에게 추천 요청 (Semantic Function 호출)
     execution_settings = OpenAIChatPromptExecutionSettings(
         service_id=service_id,
         temperature=0.7,
-        max_tokens=1000
+        max_tokens=1000,
+        extra_body=extra_body,
     )
 
     final_result = await kernel.invoke(

@@ -39,7 +39,9 @@ async def main():
         OpenAIChatCompletion(service_id=service_id, ai_model_id=model_id, async_client=AsyncOpenAI(api_key=api_key, base_url=api_base))
     )
 
-    execution_settings = OpenAIChatPromptExecutionSettings(service_id=service_id, max_tokens=1000, temperature=0.3)
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+    execution_settings = OpenAIChatPromptExecutionSettings(service_id=service_id, max_tokens=1000, temperature=0.3, extra_body=extra_body)
 
     # [함수 1: 판단 및 라우팅]
     router_config = PromptTemplateConfig(

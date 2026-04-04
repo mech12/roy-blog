@@ -13,6 +13,9 @@ api_key = os.getenv("OPENAI_API_KEY", "none")
 api_base = os.getenv("OPENAI_API_BASE")
 model_id = os.getenv("OPENAI_API_MODEL", "gpt-4o")
 
+# Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
 kernel = sk.Kernel()
 service_id = "oai_chat_gpt"
 
@@ -29,8 +32,13 @@ kernel.add_service(
 
 async def run_prompt():
     # 한글 프롬프트 실행
+    from semantic_kernel.connectors.ai.open_ai import OpenAIChatPromptExecutionSettings
+    settings = OpenAIChatPromptExecutionSettings(
+        service_id=service_id, max_tokens=2000, temperature=0.7, extra_body=extra_body,
+    )
     result = await kernel.invoke_prompt(
-        prompt="시간 여행을 주제로 한 영화를 한 편 추천해주고, 그 영화를 꼭 봐야 하는 이유를 짧게 요약해줘."
+        prompt="시간 여행을 주제로 한 영화를 한 편 추천해주고, 그 영화를 꼭 봐야 하는 이유를 짧게 요약해줘.",
+        settings=settings,
     )
     print(f"### AI 추천 결과:\n{result}")
 

@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 import semantic_kernel as sk
-from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
+from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAIChatPromptExecutionSettings
 from semantic_kernel.functions import KernelArguments, KernelPlugin
 from openai import AsyncOpenAI
 
@@ -42,10 +42,17 @@ async def main():
         print(f"❌ 플러그인 로드 실패: {e}")
         return
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+    execution_settings = OpenAIChatPromptExecutionSettings(
+        service_id=service_id, max_tokens=2000, temperature=0.7, extra_body=extra_body,
+    )
+
     # 4. 실행 함수 정의 (v1.x 데이터 바인딩 방식 적용)
     async def get_recommendation(subject, format, genre, custom):
         # 과거의 context["key"] = value 방식은 KernelArguments로 대체되었습니다.
         args = KernelArguments(
+            settings=execution_settings,
             subject=subject,
             format=format,
             genre=genre,

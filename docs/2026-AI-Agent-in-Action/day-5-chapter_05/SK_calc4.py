@@ -2,7 +2,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import semantic_kernel as sk
-from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
+from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAIChatPromptExecutionSettings
 from semantic_kernel.functions import KernelArguments
 from openai import AsyncOpenAI
 
@@ -32,8 +32,15 @@ async def main():
         parent_directory=plugins_directory
     )
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+    execution_settings = OpenAIChatPromptExecutionSettings(
+        service_id="oai_chat_gpt", max_tokens=500, temperature=0.1, extra_body=extra_body,
+    )
+
     # 실행부: 등록된 플러그인 내의 함수를 호출
     args = KernelArguments(
+        settings=execution_settings,
         operation="곱하기",
         input1="15",
         input2="8"

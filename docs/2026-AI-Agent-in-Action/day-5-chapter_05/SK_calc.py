@@ -29,11 +29,15 @@ async def main():
         ),
     )
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
     # 3. 실행 설정 (창의성보다는 정확도가 중요하므로 temperature를 낮게 설정)
     execution_settings = OpenAIChatPromptExecutionSettings(
         service_id=service_id,
         max_tokens=500,
         temperature=0.1,  # 계산은 정확해야 하므로 낮은 값 권장
+        extra_body=extra_body,
     )
 
     # 4. 사칙연산 프롬프트 템플릿 정의

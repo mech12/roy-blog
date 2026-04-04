@@ -2,7 +2,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import semantic_kernel as sk
-from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
+from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion, OpenAIChatPromptExecutionSettings
 from semantic_kernel.functions import KernelArguments
 from openai import AsyncOpenAI
 
@@ -32,8 +32,15 @@ async def main():
         parent_directory=plugins_directory
     )
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+    execution_settings = OpenAIChatPromptExecutionSettings(
+        service_id="travel_service", max_tokens=2000, temperature=0.7, extra_body=extra_body,
+    )
+
     # 3. 사용자 입력값 설정 (나중에는 자연어에서 추출하도록 연동 가능)
     args = KernelArguments(
+        settings=execution_settings,
         location="유럽",
         budget="중간",
         activity="역사 유적 탐방과 맛집 탐방"

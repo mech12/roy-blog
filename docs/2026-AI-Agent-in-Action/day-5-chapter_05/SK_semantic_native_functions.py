@@ -61,10 +61,14 @@ async def run_recommendation():
     시청한 영화 목록: {{SeenMoviesPlugin.LoadSeenMovies}}
     """
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
     execution_settings = OpenAIChatPromptExecutionSettings(
         service_id=service_id,
         max_tokens=2000,
         temperature=0.7,
+        extra_body=extra_body,
     )
 
     prompt_template_config = PromptTemplateConfig(

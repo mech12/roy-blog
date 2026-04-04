@@ -28,11 +28,15 @@ async def run():
         ),
     )
 
+    # Qwen3.5 등 thinking 모델 사용 시 thinking 모드 비활성화
+    extra_body = {"chat_template_kwargs": {"enable_thinking": False}} if api_base else {}
+
     # 3. 실행 설정 (Execution Settings)
     execution_settings = OpenAIChatPromptExecutionSettings(
         service_id=service_id,
         max_tokens=2000,
         temperature=0.7,
+        extra_body=extra_body,
     )
 
     # 4. 플러그인 디렉토리 로드
