@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip3 list:*)",
+      "Bash(git clone:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/roy/mech12/roy-blog/docs/2026-AI-Agent-in-Action/semantic-kernel/.git"
+    ]
+  }
+}
